@@ -5,7 +5,7 @@ description:
 
 baseurl: / #name of GitHub repository
 url: "" #custom url to be used instead of GitHub repository
-email: gorman.connerm@gmail.com #
+email: conner@connergorman.com #
 
 # Pagination
 paginate: 4
