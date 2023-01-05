@@ -34,4 +34,6 @@ Second, I need to know the tools necessary to automate these deployments. While 
 
 Finally, I'll be able to put the tools I have available to use in automating my deployment one piece at a time (and DOCUMENT IT).
 
+## Some Initial Thoughts
 
+The most reasonable path I see is starting from the core and moving out. 
