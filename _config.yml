@@ -3,8 +3,8 @@
 title: Conner Gorman
 description: 
 
-baseurl: / #name of GitHub repository
-url: "" #custom url to be used instead of GitHub repository
+baseurl: ""  #name of GitHub repository
+url: "https://www.connergorman.com" #custom url to be used instead of GitHub repository
 email: conner@connergorman.com #
 
 # Pagination
@@ -14,9 +14,9 @@ paginate_path: /blog/page:num/
 
 # Social media links in footer
 
-linkedin: "#"
+linkedin: "conner-gorman"
 
-github: "gruejay"
+github: "connergorman"
 
 
 
