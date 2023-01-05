@@ -31,3 +31,7 @@ If, for example, I add a new hypervisor, I want to be able to install Proxmox, a
 The project requires a few main steps. First, I need to know what I'm running, how its configured, and how it got to be that way. Since I haven't documented all (or even most) of my configurations, this will require scanning my services, re-investigating how they are configured, and writing out as much as I can for what needs to be done from a base install to get that service back up. Since a lot of this will require detailed discussion of configs and services, the documentation will live on my private wiki for the sake of security. 
 
 Second, I need to know the tools necessary to automate these deployments. While there is more than one way to peel a potato, and therefore no way to know exactly when I've learned enough tools to do this in the """optimal""" way, there are a few tools I'd _like_ to use, purely because I either (a) already know them or (b) want to know them. This includes Packer, Terraform, Ansible, Cloud-Init, and Kubernetes. With these, I think I can cover just about any use case I come across. With ansible-pull, I can even get some of the same features as Puppet or chef, tools which I don't currently plan on using. 
+
+Finally, I'll be able to put the tools I have available to use in automating my deployment one piece at a time (and DOCUMENT IT).
+
+
