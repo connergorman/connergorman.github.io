@@ -14,7 +14,7 @@ including causality, decision theory, and ethics of/about AI. My thesis was advi
 Danielle Wenner and focused on how an individual's beliefs affect their conception of themselves
 and their relationships with others. A copy of my thesis can be found under the "Projects" tab.
 
-A copy of my resume is also available for download [here][resume] is available for download.
+A copy of my resume is also available for download [here][resume].
 
 [resume]: {{ site.url }}/download/resume-connergorman.pdf
 
