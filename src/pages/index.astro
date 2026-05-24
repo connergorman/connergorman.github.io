@@ -1,17 +1,123 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro'
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout
+  title="Home"
+  description="Infrastructure engineer. Philosopher in the margins."
+>
+  <div class="content-col">
+    <!-- Hero -->
+    <div class="mb-11">
+      <div class="hero-eyebrow">
+        <span>CURRENTLY</span>
+      </div>
+      <h1 class="hero-name">
+        Infrastructure engineer.
+        <em>Philosopher in the margins.</em>
+      </h1>
+      <div class="hero-body mb-6">
+        <p class="mb-3">
+          I build distributed systems for high-traffic platforms. I think about
+          Kubernetes control planes, service mesh observability, and eBPF
+          instrumentation. I also think about Heidegger, pragmatism, and what
+          it means to be ready-to-hand.
+        </p>
+        <p>
+          This site is where I write about both. Sometimes they intersect.
+        </p>
+      </div>
+      <div class="flex gap-2 flex-wrap">
+        <span class="hchip hchip-hi">kubernetes</span>
+        <span class="hchip">go</span>
+        <span class="hchip">ebpf</span>
+        <span class="hchip">philosophy</span>
+      </div>
+    </div>
+
+    <!-- Recent writing -->
+    <div class="mt-10">
+      <div class="rule-label"><span>recent writing</span></div>
+      <ul class="post-list">
+        <li class="post-item">
+          <a href="/writing/etcd-consistency" class="post-title">
+            Understanding etcd's consistency guarantees in practice
+          </a>
+          <div class="post-meta">
+            <span class="pill pill-k">k8s</span>
+            <span class="post-date">Mar 2026</span>
+          </div>
+        </li>
+        <li class="post-item">
+          <a href="/writing/heidegger-toolbeing" class="post-title">
+            On Heidegger's tool-being and why it keeps coming up at work
+          </a>
+          <div class="post-meta">
+            <span class="pill pill-p">philosophy</span>
+            <span class="post-date">Feb 2026</span>
+          </div>
+        </li>
+        <li class="post-item">
+          <a href="/writing/ebpf-tracing" class="post-title">
+            Building a minimal network tracer with eBPF and libbpf
+          </a>
+          <div class="post-meta">
+            <span class="pill pill-k">k8s</span>
+            <span class="post-date">Jan 2026</span>
+          </div>
+        </li>
+      </ul>
+      <a href="/writing" class="see-all">
+        see all writing →
+      </a>
+    </div>
+
+    <!-- Featured projects -->
+    <div class="mt-10">
+      <div class="rule-label"><span>featured projects</span></div>
+      <ul class="list-none">
+        <li class="proj-item">
+          <div class="flex justify-between items-baseline mb-1.5">
+            <a href="https://github.com/yourname/k8s-operator" class="proj-name">
+              k8s-operator-template
+            </a>
+            <a href="https://github.com/yourname/k8s-operator" class="proj-ext">
+              ↗ github
+            </a>
+          </div>
+          <p class="proj-desc">
+            A minimal Kubernetes operator scaffolding built with controller-runtime.
+            Designed for learning how reconciliation loops work at the control plane level.
+          </p>
+          <div class="flex gap-1.5 flex-wrap">
+            <span class="chip">go</span>
+            <span class="chip">kubernetes</span>
+            <span class="chip">controller-runtime</span>
+          </div>
+        </li>
+        <li class="proj-item">
+          <div class="flex justify-between items-baseline mb-1.5">
+            <a href="https://github.com/yourname/ebpf-tracer" class="proj-name">
+              ebpf-tcp-tracer
+            </a>
+            <a href="https://github.com/yourname/ebpf-tracer" class="proj-ext">
+              ↗ github
+            </a>
+          </div>
+          <p class="proj-desc">
+            TCP connection tracer using eBPF kprobes and perf events.
+            Built to understand low-level observability without relying on third-party libraries.
+          </p>
+          <div class="flex gap-1.5 flex-wrap">
+            <span class="chip">c</span>
+            <span class="chip">ebpf</span>
+            <span class="chip">libbpf</span>
+          </div>
+        </li>
+      </ul>
+      <a href="/projects" class="see-all">
+        see all projects →
+      </a>
+    </div>
+  </div>
+</BaseLayout>

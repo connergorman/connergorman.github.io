@@ -1,0 +1,91 @@
+---
+// src/layouts/BaseLayout.astro
+import '@fontsource/lora/400.css'
+import '@fontsource/lora/400-italic.css'
+import '@fontsource/lora/600.css'
+import '@fontsource/jetbrains-mono/400.css'
+import '@fontsource/jetbrains-mono/500.css'
+import '../styles/global.css'
+
+interface Props {
+  title: string
+  description?: string
+  ogImage?: string
+}
+
+const {
+  title,
+  description = 'Infrastructure engineer. Philosopher in the margins.',
+  ogImage = '/og-default.png',
+} = Astro.props
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site)
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="canonical" href={canonicalURL} />
+
+    <title>{title} · yourname</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:type"        content="website" />
+    <meta property="og:url"         content={canonicalURL} />
+    <meta property="og:title"       content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image"       content={new URL(ogImage, Astro.site)} />
+    <meta name="twitter:card"       content="summary_large_image" />
+
+    <link rel="alternate" type="application/rss+xml" title="yourname · writing" href="/rss.xml" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Dark mode: run before paint to avoid flash -->
+    <script is:inline>
+      ;(function () {
+        const stored = localStorage.getItem('theme')
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (stored === 'dark' || (!stored && prefersDark)) {
+          document.documentElement.classList.add('dark')
+        }
+      })()
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <nav class="site-nav">
+        <a href="/" class="site-name">
+          <span class="nav-prompt">›</span>
+          yourname.dev
+          <span class="nav-cursor" aria-hidden="true"></span>
+        </a>
+        <div class="nav-links" role="list">
+          <a href="/"         role="listitem" class="nav-link" aria-current={Astro.url.pathname === '/'                  ? 'page' : undefined}>home</a>
+          <a href="/writing"  role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/writing')   ? 'page' : undefined}>writing</a>
+          <a href="/projects" role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/projects')  ? 'page' : undefined}>projects</a>
+          <a href="/about"    role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/about')     ? 'page' : undefined}>about</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+
+    <footer class="content-col" style="padding-top: 0;">
+      <div class="rule-label"><span>end of page</span></div>
+      <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:1rem;">
+        <span style="font-family:var(--font-mono); font-size:var(--text-chip); color:var(--color-ink-3);">
+          © {new Date().getFullYear()} yourname
+        </span>
+        <a href="/rss.xml" style="font-family:var(--font-mono); font-size:var(--text-chip); color:var(--color-ink-3); text-decoration:none;"
+           onmouseover="this.style.color='var(--color-teal)'" onmouseout="this.style.color='var(--color-ink-3)'">
+          rss ↗
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>

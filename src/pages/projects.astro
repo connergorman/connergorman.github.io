@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout
+  title="Projects"
+  description="Infrastructure tools and learning projects. Kubernetes operators, eBPF tracers, and distributed systems experiments."
+>
+  <div class="content-col">
+    <div class="rule-label"><span>projects</span></div>
+
+    <ul class="list-none">
+      <li class="proj-item">
+        <div class="flex justify-between items-baseline mb-1.5">
+          <a href="https://github.com/yourname/k8s-operator" class="proj-name">
+            k8s-operator-template
+          </a>
+          <a href="https://github.com/yourname/k8s-operator" class="proj-ext">
+            ↗ github
+          </a>
+        </div>
+        <p class="proj-desc">
+          A minimal Kubernetes operator scaffolding built with controller-runtime.
+          Designed for learning how reconciliation loops work at the control plane level.
+        </p>
+        <div class="flex gap-1.5 flex-wrap">
+          <span class="chip">go</span>
+          <span class="chip">kubernetes</span>
+          <span class="chip">controller-runtime</span>
+        </div>
+      </li>
+
+      <li class="proj-item">
+        <div class="flex justify-between items-baseline mb-1.5">
+          <a href="https://github.com/yourname/ebpf-tracer" class="proj-name">
+            ebpf-tcp-tracer
+          </a>
+          <a href="https://github.com/yourname/ebpf-tracer" class="proj-ext">
+            ↗ github
+          </a>
+        </div>
+        <p class="proj-desc">
+          TCP connection tracer using eBPF kprobes and perf events.
+          Built to understand low-level observability without relying on third-party libraries.
+        </p>
+        <div class="flex gap-1.5 flex-wrap">
+          <span class="chip">c</span>
+          <span class="chip">ebpf</span>
+          <span class="chip">libbpf</span>
+        </div>
+      </li>
+
+      <li class="proj-item">
+        <div class="flex justify-between items-baseline mb-1.5">
+          <a href="https://github.com/yourname/raft-impl" class="proj-name">
+            raft-consensus-go
+          </a>
+          <a href="https://github.com/yourname/raft-impl" class="proj-ext">
+            ↗ github
+          </a>
+        </div>
+        <p class="proj-desc">
+          Implementation of the Raft consensus algorithm in Go.
+          Educational project to understand distributed consensus and leader election mechanics.
+        </p>
+        <div class="flex gap-1.5 flex-wrap">
+          <span class="chip">go</span>
+          <span class="chip">distributed-systems</span>
+        </div>
+      </li>
+
+      <li class="proj-item">
+        <div class="flex justify-between items-baseline mb-1.5">
+          <a href="https://github.com/yourname/service-mesh" class="proj-name">
+            minimal-service-mesh
+          </a>
+          <a href="https://github.com/yourname/service-mesh" class="proj-ext">
+            ↗ github
+          </a>
+        </div>
+        <p class="proj-desc">
+          A toy service mesh implementation with Envoy sidecars and a custom control plane.
+          Explores xDS protocol and dynamic configuration updates in a real cluster.
+        </p>
+        <div class="flex gap-1.5 flex-wrap">
+          <span class="chip">go</span>
+          <span class="chip">envoy</span>
+          <span class="chip">kubernetes</span>
+          <span class="chip">grpc</span>
+        </div>
+      </li>
+
+      <li class="proj-item">
+        <div class="flex justify-between items-baseline mb-1.5">
+          <a href="https://github.com/yourname/cni-plugin" class="proj-name">
+            simple-cni-plugin
+          </a>
+          <a href="https://github.com/yourname/cni-plugin" class="proj-ext">
+            ↗ github
+          </a>
+        </div>
+        <p class="proj-desc">
+          CNI plugin that sets up network namespaces and veth pairs for container networking.
+          Minimal implementation to learn how Kubernetes networking plugins work under the hood.
+        </p>
+        <div class="flex gap-1.5 flex-wrap">
+          <span class="chip">go</span>
+          <span class="chip">cni</span>
+          <span class="chip">networking</span>
+        </div>
+      </li>
+
+      <li class="proj-item">
+        <div class="flex justify-between items-baseline mb-1.5">
+          <a href="https://github.com/yourname/admission-webhook" class="proj-name">
+            k8s-admission-webhook
+          </a>
+          <a href="https://github.com/yourname/admission-webhook" class="proj-ext">
+            ↗ github
+          </a>
+        </div>
+        <p class="proj-desc">
+          Kubernetes admission webhook that validates and mutates pod specs.
+          Used for enforcing security policies and injecting sidecars in a production cluster.
+        </p>
+        <div class="flex gap-1.5 flex-wrap">
+          <span class="chip">go</span>
+          <span class="chip">kubernetes</span>
+          <span class="chip">webhooks</span>
+        </div>
+      </li>
+
+      <li class="proj-item">
+        <div class="flex justify-between items-baseline mb-1.5">
+          <a href="https://github.com/yourname/container-runtime" class="proj-name">
+            container-runtime-from-scratch
+          </a>
+          <a href="https://github.com/yourname/container-runtime" class="proj-ext">
+            ↗ github
+          </a>
+        </div>
+        <p class="proj-desc">
+          A minimal container runtime built using Linux namespaces, cgroups, and pivot_root.
+          Educational implementation to understand what Docker and containerd do at a low level.
+        </p>
+        <div class="flex gap-1.5 flex-wrap">
+          <span class="chip">c</span>
+          <span class="chip">linux</span>
+          <span class="chip">containers</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</BaseLayout>
