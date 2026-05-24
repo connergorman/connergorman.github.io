@@ -6,6 +6,7 @@ import '@fontsource/lora/600.css'
 import '@fontsource/jetbrains-mono/400.css'
 import '@fontsource/jetbrains-mono/500.css'
 import '../styles/global.css'
+import ThemeToggle from '../components/ThemeToggle.astro'
 
 interface Props {
   title: string
@@ -67,6 +68,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           <a href="/writing"  role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/writing')   ? 'page' : undefined}>writing</a>
           <a href="/projects" role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/projects')  ? 'page' : undefined}>projects</a>
           <a href="/about"    role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/about')     ? 'page' : undefined}>about</a>
+          <ThemeToggle />
         </div>
       </nav>
     </header>

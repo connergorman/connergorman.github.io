@@ -1,136 +1,77 @@
 ---
+import { getCollection, render } from 'astro:content'
 import BaseLayout from '../layouts/BaseLayout.astro'
+
+const [profile] = await getCollection('about')
+
+if (!profile) {
+  throw new Error('Missing about profile at src/content/about/profile.mdx')
+}
+
+const { Content } = await render(profile)
 ---
 
-<BaseLayout
-  title="About"
-  description="Infrastructure engineer working on distributed systems. Philosophy student in another life."
->
+<BaseLayout title={profile.data.title} description={profile.data.description}>
   <div class="content-col">
-    <!-- Lede -->
     <div class="max-w-prose mb-10">
       <p class="font-serif text-lede italic text-ink-2 leading-[1.7] mb-6">
-        I'm an infrastructure engineer specializing in Kubernetes, distributed
-        systems, and observability. I've spent the last several years building
-        platforms that keep services running at scale.
+        {profile.data.lede}
       </p>
-      <div class="font-serif text-body text-ink-2 leading-reading space-y-4">
-        <p>
-          I work primarily with Go, Kubernetes control plane components, service
-          mesh architectures, and eBPF-based instrumentation. Most of my time is
-          spent thinking about reliability, performance, and how to make complex
-          systems comprehensible to the people who operate them.
-        </p>
-        <p>
-          I also studied philosophy. My thesis examined Heidegger's account of
-          technical practice and its relevance to software engineering. I'm
-          interested in pragmatism, phenomenology, and what it means to think
-          clearly about tools and craft.
-        </p>
-        <p>
-          This site is where I write about both sides of that work. The
-          technical posts are usually deep-dives into infrastructure problems.
-          The philosophy posts are slower and more exploratory.
-        </p>
+      <div class="prose-content about-copy">
+        <Content />
       </div>
     </div>
 
-    <!-- Social links -->
     <div class="mb-10">
       <div class="rule-label"><span>links</span></div>
       <div class="flex flex-col gap-2.5 mt-4">
-        <a href="https://github.com/yourname" class="social-link">
-          <span>github</span>
-          <span>↗</span>
-        </a>
-        <a href="https://linkedin.com/in/yourname" class="social-link">
-          <span>linkedin</span>
-          <span>↗</span>
-        </a>
-        <a href="mailto:you@yourname.dev" class="social-link">
-          <span>you@yourname.dev</span>
-        </a>
+        {profile.data.links.map((link) => (
+          <a href={link.href} class="social-link">
+            <span>{link.label}</span>
+            {link.external && <span>↗</span>}
+          </a>
+        ))}
       </div>
     </div>
 
-    <!-- Experience -->
     <div class="mb-10">
       <div class="rule-label"><span>experience</span></div>
       <ul class="list-none">
-        <li class="exp-item">
-          <div class="flex justify-between items-baseline mb-1">
-            <span class="exp-org">Platform Engineering · TechCorp</span>
-            <span class="exp-date">2022 – present</span>
-          </div>
-          <p class="exp-role">
-            Senior Infrastructure Engineer — Built Kubernetes platform for 200+ microservices.
-            Designed custom admission webhooks, service mesh integration, and eBPF observability tooling.
-          </p>
-        </li>
-        <li class="exp-item">
-          <div class="flex justify-between items-baseline mb-1">
-            <span class="exp-org">Cloud Infrastructure · StartupCo</span>
-            <span class="exp-date">2020 – 2022</span>
-          </div>
-          <p class="exp-role">
-            Infrastructure Engineer — Migrated monolith to Kubernetes. Implemented GitOps workflows,
-            monitoring stack, and CI/CD pipelines for containerized services.
-          </p>
-        </li>
-        <li class="exp-item">
-          <div class="flex justify-between items-baseline mb-1">
-            <span class="exp-org">Backend Engineering · ProductCo</span>
-            <span class="exp-date">2018 – 2020</span>
-          </div>
-          <p class="exp-role">
-            Software Engineer — Built distributed backend services in Go. Worked on API gateway,
-            rate limiting, and inter-service communication patterns.
-          </p>
-        </li>
+        {profile.data.experience.map((item) => (
+          <li class="exp-item">
+            <div class="flex justify-between items-baseline mb-1">
+              <span class="exp-org">
+                {item.title}{item.organization && ` · ${item.organization}`}
+              </span>
+              <span class="exp-date">{item.date}</span>
+            </div>
+            <p class="exp-role">{item.summary}</p>
+          </li>
+        ))}
       </ul>
     </div>
 
-    <!-- Education -->
     <div class="mb-10">
       <div class="rule-label"><span>education</span></div>
       <ul class="list-none">
-        <li class="exp-item">
-          <div class="flex justify-between items-baseline mb-1">
-            <span class="exp-org">MA Philosophy · University Name</span>
-            <span class="exp-date">2017 – 2018</span>
-          </div>
-          <p class="exp-role">
-            Thesis: "Being-in-the-world and technical practice: a Heideggerian account of DevOps"
-          </p>
-        </li>
-        <li class="exp-item">
-          <div class="flex justify-between items-baseline mb-1">
-            <span class="exp-org">BS Computer Science · University Name</span>
-            <span class="exp-date">2013 – 2017</span>
-          </div>
-          <p class="exp-role">
-            Focus: distributed systems, operating systems, networking
-          </p>
-        </li>
+        {profile.data.education.map((item) => (
+          <li class="exp-item">
+            <div class="flex justify-between items-baseline mb-1">
+              <span class="exp-org">
+                {item.title}{item.organization && ` · ${item.organization}`}
+              </span>
+              <span class="exp-date">{item.date}</span>
+            </div>
+            <p class="exp-role">{item.summary}</p>
+          </li>
+        ))}
       </ul>
     </div>
 
-    <!-- Skills -->
     <div class="mb-10">
       <div class="rule-label"><span>stack</span></div>
       <div class="flex flex-wrap gap-2 mt-4">
-        <span class="skill-tag">kubernetes</span>
-        <span class="skill-tag">go</span>
-        <span class="skill-tag">ebpf</span>
-        <span class="skill-tag">envoy</span>
-        <span class="skill-tag">prometheus</span>
-        <span class="skill-tag">grafana</span>
-        <span class="skill-tag">terraform</span>
-        <span class="skill-tag">grpc</span>
-        <span class="skill-tag">postgresql</span>
-        <span class="skill-tag">redis</span>
-        <span class="skill-tag">linux</span>
-        <span class="skill-tag">docker</span>
+        {profile.data.skills.map((skill) => <span class="skill-tag">{skill}</span>)}
       </div>
     </div>
   </div>

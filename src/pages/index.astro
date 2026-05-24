@@ -1,10 +1,17 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
+import { getCollection } from 'astro:content'
+import { byDateDesc, formatMonthYear, pillClass } from '../lib/content'
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(byDateDesc)
+const recentPosts = posts.slice(0, 3)
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(byDateDesc)
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 2)
 ---
 
 <BaseLayout
   title="Home"
-  description="Infrastructure engineer. Philosopher in the margins."
+  description="Software engineer and former professional philosopher."
 >
   <div class="content-col">
     <!-- Hero -->
@@ -13,15 +20,14 @@ import BaseLayout from '../layouts/BaseLayout.astro'
         <span>CURRENTLY</span>
       </div>
       <h1 class="hero-name">
-        Infrastructure engineer.
+        Software engineer.
         <em>Philosopher in the margins.</em>
       </h1>
       <div class="hero-body mb-6">
         <p class="mb-3">
-          I build distributed systems for high-traffic platforms. I think about
-          Kubernetes control planes, service mesh observability, and eBPF
-          instrumentation. I also think about Heidegger, pragmatism, and what
-          it means to be ready-to-hand.
+          I build systems that help engineers ship faster, more easily, and more reliably.
+          I also sometimes write about philsophy, especially philosophy of science and 
+          political philosophy. 
         </p>
         <p>
           This site is where I write about both. Sometimes they intersect.
@@ -39,33 +45,19 @@ import BaseLayout from '../layouts/BaseLayout.astro'
     <div class="mt-10">
       <div class="rule-label"><span>recent writing</span></div>
       <ul class="post-list">
-        <li class="post-item">
-          <a href="/writing/etcd-consistency" class="post-title">
-            Understanding etcd's consistency guarantees in practice
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Mar 2026</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/heidegger-toolbeing" class="post-title">
-            On Heidegger's tool-being and why it keeps coming up at work
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-p">philosophy</span>
-            <span class="post-date">Feb 2026</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/ebpf-tracing" class="post-title">
-            Building a minimal network tracer with eBPF and libbpf
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Jan 2026</span>
-          </div>
-        </li>
+        {recentPosts.map((post) => (
+          <li class="post-item">
+            <a href={`/writing/${post.id}`} class="post-title">
+              {post.data.title}
+            </a>
+            <div class="post-meta">
+              <span class={`pill ${pillClass(post.data.category)}`}>
+                {post.data.category}
+              </span>
+              <span class="post-date">{formatMonthYear(post.data.date)}</span>
+            </div>
+          </li>
+        ))}
       </ul>
       <a href="/writing" class="see-all">
         see all writing →
@@ -76,44 +68,24 @@ import BaseLayout from '../layouts/BaseLayout.astro'
     <div class="mt-10">
       <div class="rule-label"><span>featured projects</span></div>
       <ul class="list-none">
-        <li class="proj-item">
-          <div class="flex justify-between items-baseline mb-1.5">
-            <a href="https://github.com/yourname/k8s-operator" class="proj-name">
-              k8s-operator-template
-            </a>
-            <a href="https://github.com/yourname/k8s-operator" class="proj-ext">
-              ↗ github
-            </a>
-          </div>
-          <p class="proj-desc">
-            A minimal Kubernetes operator scaffolding built with controller-runtime.
-            Designed for learning how reconciliation loops work at the control plane level.
-          </p>
-          <div class="flex gap-1.5 flex-wrap">
-            <span class="chip">go</span>
-            <span class="chip">kubernetes</span>
-            <span class="chip">controller-runtime</span>
-          </div>
-        </li>
-        <li class="proj-item">
-          <div class="flex justify-between items-baseline mb-1.5">
-            <a href="https://github.com/yourname/ebpf-tracer" class="proj-name">
-              ebpf-tcp-tracer
-            </a>
-            <a href="https://github.com/yourname/ebpf-tracer" class="proj-ext">
-              ↗ github
-            </a>
-          </div>
-          <p class="proj-desc">
-            TCP connection tracer using eBPF kprobes and perf events.
-            Built to understand low-level observability without relying on third-party libraries.
-          </p>
-          <div class="flex gap-1.5 flex-wrap">
-            <span class="chip">c</span>
-            <span class="chip">ebpf</span>
-            <span class="chip">libbpf</span>
-          </div>
-        </li>
+        {featuredProjects.map((project) => (
+          <li class="proj-item">
+            <div class="flex justify-between items-baseline mb-1.5">
+              <a href={`/projects/${project.id}`} class="proj-name">
+                {project.data.title}
+              </a>
+              {project.data.repo && (
+                <a href={project.data.repo} class="proj-ext">
+                  ↗ github
+                </a>
+              )}
+            </div>
+            <p class="proj-desc">{project.data.description}</p>
+            <div class="flex gap-1.5 flex-wrap">
+              {project.data.tags.map((tag) => <span class="chip">{tag}</span>)}
+            </div>
+          </li>
+        ))}
       </ul>
       <a href="/projects" class="see-all">
         see all projects →

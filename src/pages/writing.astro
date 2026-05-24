@@ -1,5 +1,11 @@
 ---
+import { getCollection } from 'astro:content'
 import BaseLayout from '../layouts/BaseLayout.astro'
+import { byDateDesc, formatMonthYear, groupWritingByYear, pillClass } from '../lib/content'
+
+const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(byDateDesc)
+const postsByYear = groupWritingByYear(posts)
+const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
 ---
 
 <BaseLayout
@@ -15,106 +21,25 @@ import BaseLayout from '../layouts/BaseLayout.astro'
       </p>
     </div>
 
-    <!-- 2026 posts -->
-    <div class="mb-8">
-      <div class="year-label">2026</div>
-      <ul class="post-list">
-        <li class="post-item">
-          <a href="/writing/etcd-consistency" class="post-title">
-            Understanding etcd's consistency guarantees in practice
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Mar 2026</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/heidegger-toolbeing" class="post-title">
-            On Heidegger's tool-being and why it keeps coming up at work
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-p">philosophy</span>
-            <span class="post-date">Feb 2026</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/ebpf-tracing" class="post-title">
-            Building a minimal network tracer with eBPF and libbpf
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Jan 2026</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- 2025 posts -->
-    <div class="mb-8">
-      <div class="year-label">2025</div>
-      <ul class="post-list">
-        <li class="post-item">
-          <a href="/writing/service-mesh-observability" class="post-title">
-            What I learned implementing custom Envoy filters
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Dec 2025</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/pragmatism-devops" class="post-title">
-            Pragmatism and platform engineering: notes on Dewey
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-p">philosophy</span>
-            <span class="post-date">Nov 2025</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/kubernetes-scheduler" class="post-title">
-            How the Kubernetes scheduler actually works
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Sep 2025</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/raft-consensus" class="post-title">
-            Raft consensus: implementing leader election in Go
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Aug 2025</span>
-          </div>
-        </li>
-        <li class="post-item">
-          <a href="/writing/container-runtimes" class="post-title">
-            Container runtimes from scratch: namespaces and cgroups
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-k">k8s</span>
-            <span class="post-date">Jun 2025</span>
-          </div>
-        </li>
-      </ul>
-    </div>
-
-    <!-- Academic work -->
-    <div class="mb-8">
-      <div class="rule-label"><span>academic</span></div>
-      <ul class="post-list">
-        <li class="post-item">
-          <a href="/writing/thesis" class="post-title">
-            Being-in-the-world and technical practice: a Heideggerian account of DevOps
-          </a>
-          <div class="post-meta">
-            <span class="pill pill-t">thesis</span>
-            <span class="post-date">2024</span>
-          </div>
-        </li>
-      </ul>
-    </div>
+    {years.map((year) => (
+      <div class="mb-8">
+        <div class="year-label">{year}</div>
+        <ul class="post-list">
+          {postsByYear[year].map((post) => (
+            <li class="post-item">
+              <a href={`/writing/${post.id}`} class="post-title">
+                {post.data.title}
+              </a>
+              <div class="post-meta">
+                <span class={`pill ${pillClass(post.data.category)}`}>
+                  {post.data.category}
+                </span>
+                <span class="post-date">{formatMonthYear(post.data.date)}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div>
 </BaseLayout>
