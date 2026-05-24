@@ -30,7 +30,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="canonical" href={canonicalURL} />
 
-    <title>{title} · yourname</title>
+    <title>{title} · Conner Gorman</title>
     <meta name="description" content={description} />
 
     <meta property="og:type"        content="website" />
@@ -40,7 +40,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:image"       content={new URL(ogImage, Astro.site)} />
     <meta name="twitter:card"       content="summary_large_image" />
 
-    <link rel="alternate" type="application/rss+xml" title="yourname · writing" href="/rss.xml" />
+    <link rel="alternate" type="application/rss+xml" title="Conner Gorman · writing" href="/rss.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
     <!-- Dark mode: run before paint to avoid flash -->
@@ -60,7 +60,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       <nav class="site-nav">
         <a href="/" class="site-name">
           <span class="nav-prompt">›</span>
-          yourname.dev
+          connergorman.com
           <span class="nav-cursor" aria-hidden="true"></span>
         </a>
         <div class="nav-links" role="list">
