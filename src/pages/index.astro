@@ -4,9 +4,9 @@ import { getCollection } from 'astro:content'
 import { byDateDesc, formatMonthYear, pillClass } from '../lib/content'
 
 const posts = (await getCollection('writing', ({ data }) => !data.draft)).sort(byDateDesc)
-const recentPosts = posts.slice(0, 3)
+const recentPosts = posts.slice(0, 5)
 const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(byDateDesc)
-const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 2)
+const featuredProjects = projects.filter((project) => project.data.featured).slice(0, 3)
 ---
 
 <BaseLayout
@@ -20,88 +20,88 @@ const featuredProjects = projects.filter((project) => project.data.featured).sli
     <p class="hero-banner-caption">Twilight Beach, Cape Reinga, New Zealand. 2018</p>
   </div>
 
-  <div class="content-col">
-    <!-- Hero -->
-    <div class="hero-block">
-      <img
-        src="/headshot.jpg"
-        alt="Conner Gorman"
-        class="headshot-float"
-      />
-      <div class="hero-eyebrow">
-        <span>software engineer</span>
-      </div>
-      <p class="hero-caption-mobile">Twilight Beach,<br/>Cape Reinga, NZ · 2018</p>
-      <h1 class="hero-name">Conner Gorman</h1>
-      <div class="hero-body mb-5">
-        <p class="mb-3">
-          Software engineer working on Kubernetes platforms, developer
-          infrastructure, and control-plane systems. I like the kind of platform
-          work that makes hard operational problems feel boring.
-        </p>
-        <p class="mb-3">
-          My background is in philosophy of science and political philosophy,
-          which I remain interested in and write about still from time to time.
-          Outside work, I ride my gravel bike, trying to find hidden off-road gems
-          in unlikely places.
-        </p>
-        <p class="mb-3">
-          See my <a href="/about" class="inline-prose-link">about →</a> page for more about me,
-          check out my <a href="/writing" class="inline-prose-link">writing →</a>, or see some
-          of my <a href="/projects" class="inline-prose-link">projects →</a>.
-        </p>
+  <div class="home-grid">
+    <!-- Left: bio -->
+    <div class="home-left">
+      <div class="hero-block">
+        <img
+          src="/headshot.jpg"
+          alt="Conner Gorman"
+          class="headshot-float"
+        />
+        <div class="hero-eyebrow">
+          <span>software engineer</span>
+        </div>
+        <p class="hero-caption-mobile">Twilight Beach,<br/>Cape Reinga, NZ · 2018</p>
+        <h1 class="hero-name">Conner Gorman</h1>
+        <div class="hero-body mb-5">
+          <p class="mb-3">
+            Software engineer working on Kubernetes platforms, developer
+            infrastructure, and control-plane systems. I like the kind of platform
+            work that makes hard operational problems feel boring.
+          </p>
+          <p class="mb-3">
+            My background is in philosophy of science and political philosophy,
+            which I remain interested in and write about still from time to time.
+            Outside work, I ride my gravel bike, trying to find hidden off-road gems
+            in unlikely places.
+          </p>
+        </div>
       </div>
     </div>
 
-    <!-- Recent writing -->
-    <div class="mt-10">
-      <div class="rule-label"><span>recent writing</span></div>
-      <ul class="post-list">
-        {recentPosts.map((post) => (
-          <li class="post-item">
-            <a href={`/writing/${post.id}`} class="post-title">
-              {post.data.title}
-            </a>
-            <div class="post-meta">
-              <span class={`pill ${pillClass(post.data.category)}`}>
-                {post.data.category}
-              </span>
-              <span class="post-date">{formatMonthYear(post.data.date)}</span>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <a href="/writing" class="see-all">
-        see all writing →
-      </a>
-    </div>
-
-    <!-- Featured projects -->
-    <div class="mt-10">
-      <div class="rule-label"><span>featured projects</span></div>
-      <ul class="list-none">
-        {featuredProjects.map((project) => (
-          <li class="proj-item">
-            <div class="flex justify-between items-baseline mb-1.5">
-              <a href={`/projects/${project.id}`} class="proj-name">
-                {project.data.title}
+    <!-- Right: writing + projects -->
+    <div class="home-right">
+      <!-- Recent writing -->
+      <div class="home-right-section">
+        <div class="rule-label"><span>recent writing</span></div>
+        <ul class="post-list">
+          {recentPosts.map((post) => (
+            <li class="post-item">
+              <a href={`/writing/${post.id}`} class="post-title">
+                {post.data.title}
               </a>
-              {project.data.repo && (
-                <a href={project.data.repo} class="proj-ext">
-                  ↗ github
+              <div class="post-meta">
+                <span class={`pill ${pillClass(post.data.category)}`}>
+                  {post.data.category}
+                </span>
+                <span class="post-date">{formatMonthYear(post.data.date)}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <a href="/writing" class="see-all">
+          see all writing →
+        </a>
+      </div>
+
+      <!-- Featured projects -->
+      <div class="home-right-section">
+        <div class="rule-label"><span>featured projects</span></div>
+        <ul class="list-none">
+          {featuredProjects.map((project) => (
+            <li class="proj-item">
+              <div class="flex justify-between items-baseline mb-1.5">
+                <a href={`/projects/${project.id}`} class="proj-name">
+                  {project.data.title}
                 </a>
-              )}
-            </div>
-            <p class="proj-desc">{project.data.description}</p>
-            <div class="flex gap-1.5 flex-wrap">
-              {project.data.tags.map((tag) => <span class="chip">{tag}</span>)}
-            </div>
-          </li>
-        ))}
-      </ul>
-      <a href="/projects" class="see-all">
-        see all projects →
-      </a>
+                {project.data.repo && (
+                  <a href={project.data.repo} class="proj-ext">
+                    ↗ github
+                  </a>
+                )}
+              </div>
+              <p class="proj-desc">{project.data.description}</p>
+              <div class="flex gap-1.5 flex-wrap">
+                {project.data.tags.map((tag) => <span class="chip">{tag}</span>)}
+              </div>
+            </li>
+          ))}
+        </ul>
+        <a href="/projects" class="see-all">
+          see all projects →
+        </a>
+      </div>
     </div>
   </div>
 </BaseLayout>
