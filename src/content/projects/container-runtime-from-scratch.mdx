@@ -1,9 +1,18 @@
 ---
-title: container-runtime-from-scratch
-description: A minimal container runtime built using Linux namespaces, cgroups, and pivot_root. Educational implementation to understand what Docker and containerd do at a low level.
-date: 2025-06-05
-tags: [c, linux, containers]
-repo: https://github.com/yourname/container-runtime
+title: Boxr container runtime
+date: 2026-05-24
+description: A container runtime built using Linux namespaces, cgroups, and pivot_root.
+tags: [go, linux, containers]
+featured: true
+repo: https://github.com/connergorman/boxr
 ---
 
-Project notes belong here.
+`boxr` came out of researching how Kubernetes actually launches a container. As with I assume
+many people, I had used Docker and Kubernetes for years, and knew that `containerd` was somehow
+involved. But I wanted to understand how, exactly, the operating system is able to isolate
+processes and enforce resource quotas. I set out to replace `runc` with my own
+custom code, and a CLI wrapper that could replace docker/podman for basic CLI interactions.
+
+What I learned, though, was that 1) systems programming is hard; 2) systems programming is even harder
+when you're using Go to move between namespaces. I still have more to do in the project,
+but the work so far is documented in its own site, [https://connergorman.com/boxr](https://connergorman.com/boxr).

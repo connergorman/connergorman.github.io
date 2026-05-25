@@ -13,14 +13,6 @@ const years = Object.keys(postsByYear).sort((a, b) => Number(b) - Number(a))
   description="Technical posts on Kubernetes, distributed systems, and eBPF. Occasional notes on philosophy."
 >
   <div class="content-col">
-    <div class="max-w-prose mb-10">
-      <p class="font-serif text-body text-ink-2 leading-reading">
-        I write about infrastructure engineering, distributed systems, and
-        philosophy. Most posts are technical deep-dives. Some are reflections
-        on ideas that won't fit in Slack.
-      </p>
-    </div>
-
     {years.map((year) => (
       <div class="mb-8">
         <div class="year-label">{year}</div>

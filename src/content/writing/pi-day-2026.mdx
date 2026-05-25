@@ -1,0 +1,133 @@
+---
+title: "A (belated) Pi Day approximation"
+description: One of my most favorite ways of approximating Pi
+date: 2026-05-24
+category: math
+---
+
+import Callout from '../../components/Callout.astro'
+
+For pi day I like to write about fun and interesting ways to approximate pi.
+This one was what I shared with friends and colleagues for 2025, but never
+committed it to a real write up.
+I learned it from [Matt Parker on YouTube](https://www.youtube.com/watch?v=RZBhSi_PwHU)
+9 years ago. In fact, implementing this approximation was one of the earliest programs
+I remember writing after learning you could have a career in "playing with computers".[^1]
+
+We'll start by showing the code, then step through what its doing, and then
+I'll explain why it works.
+
+```python
+import random
+import math
+def gcd(a: int, b: int) -> int:
+    if b == 0:
+        return a
+    r = a % b
+    
+    return gcd(b, r)
+
+def estimate_pi(max):
+    count = 0
+    for i in range(max):
+        a = random.randint(1,1_000_000_000)
+        b = random.randint(1,1_000_000_000)
+        if a > b:
+            _gcd = gcd(a,b)
+        else:
+            _gcd = gcd(b,a)
+        if _gcd == 1:
+            count+=1
+    mu = float(count) / float(max)
+    est = math.sqrt(6 / mu)
+    print(f"samples: {max}, Pi: {est}")
+
+
+if __name__ == "__main__":
+    for i in [10, 100, 1000, 100_000, 1_000_000, 10_000_000]:
+        estimate_pi(i)
+```
+
+The first function, `gcd(a,b)`, is a greatest common divisor (GCD) function. Given integers
+`a` and `b`, find the largest integer that divides them both. For example,
+`12` and `18` have a greatest common divisor of `6` (the only divisor of `12` greater
+than `6` is `12` itself, and `12` doesn't divide `18`). The GCD of two integers can
+be recursively calculated as follows:
+
+- divide the larger by the smaller
+- If the remainder is 0, then the smaller number evenly divides the larger, and therefore the
+smaller number is the GCD
+- If the remainder is not zero, call the GCD algorithm again, passing what was the smaller number
+as the larger number, and the remainder as the smaller number.
+
+<Callout type="note">
+
+**Why does this work?**
+
+Note, first, that it must terminate. Since we are always dividing by the
+smaller number, the remainder can only ever be at most $(b-1)$, where $b$ is the smaller
+integer. Further, the remainder must always be non-negative, since `gcd(x, 0) = x` is a
+fact about `gcd`. Thus, the remainders left represent a monotonic decreasing sequence
+bounded below by 0. Any such sequence must terminate.
+
+Second, and more interestingly, why does $gcd(a, b) = gcd(b, a\mod b)$?
+$a\mod b$ is nothing more than $a - bz$ where $z$ is the largest value such that $bz \lt a$.
+Therefore, it suffices to show that $gcd(a, b) = gcd(b, a - bz)$.
+It should be straightforward to convince yourself of the following: any integer $d$ that divides
+$a$ and $b$ must also divide $a - bz$ and further, and integer that divides both $b$ and $a - bz$
+must divide $a$. From there, the conclusion should follow.
+
+</Callout>
+
+The `estimate_pi` function is where most of the interesting bits happen. It starts out simple,
+picking 2 random integers from (1, 1,000,000,000) then checking their GCD. If it's 1 (that is,
+the two random integers are co-prime, meaning they share no prime factors) the
+counter is incremented and the loop repeats `max` times.
+
+Then, it does something weird: calculates `mu`, the ratio of coprime pairs to total pairs selected,
+then does $\sqrt{\frac{6}{\text{mu}}}$. Then it prints that for the number of samples run, it
+estimated pi as the result of that square root.
+
+Let's see it in action:
+
+```python
+❯ python pi.py
+samples: 10, Pi: 3.1622776601683795
+samples: 100, Pi: 3.1622776601683795
+samples: 1000, Pi: 3.154401489382559
+samples: 100000, Pi: 3.1450532423362656
+samples: 1000000, Pi: 3.1432013101695597
+samples: 10000000, Pi: 3.1414952515244017
+```
+
+We can see that it does slowly seem to converge towards pi, but
+even after 10 million samples, it only gets 3 digits after the decimal.
+Its not the most efficient approximation!
+
+## The Math
+
+So we understand GCD and co-prime counting, but why does taking
+the ratio of co-prime pairs to total pairs give us a number that has
+a closed form relationship to pi?
+
+See that we can estimate the odds that a given integer is divisible by a prime, $p$,
+by $\frac{1}{p}$. The odds that any two randomly selected integers are both divisible by
+$p$ is $\frac{1}{p^2}$. So the odds that they are both not divisible by $p$ is $1 - \frac{1}{p^2}$.
+
+What we want, though, is that the integers are both not divisble by *any* prime. So we must
+take the product over all primes of the odds that they are not both divisible by that prime:
+$\prod\limits_{\text{prime } p} 1 - \frac{1}{p^2}$.
+
+With a little rewrite, we have $\left( \prod\limits_{\text{prime } p} \frac{1}{1-p^{-2}}\right) ^{-1} = \frac{1}{\zeta(2)}$, where
+$\zeta$ is the Riemann Zeta Function, which, when evaluated at 2, is known as the Basel Problem and has
+a known closed form solution due to Euler, $\frac{\pi^2}{6}$. Thus, we have $P(gcd(a,b) = 1) = \frac{\pi^2}{6}$,
+and so if we have an estiamte for the probability of two integers being coprime, we can estiamte pi with:
+$\pi \approx \sqrt{\frac{6}{P(gcd(a,b)=1)}}$.
+
+Now, I won't pretend to still remember how we can prove that $\zeta(2)$ has that particular closed form.
+I knew it at one point, and there are plenty of resources online that can explain it to you. I won't go
+through the process of rehashing their explanations. A particularly nice geometric interpretation is
+provided by [3blue1brown](https://www.youtube.com/watch?v=d-o3eB9sfls).
+
+[^1]: I found out "computer science" and "software engineering" were career options only after starting
+college. Up until then, I had just been having fun breaking my iMac in new and interesting ways.

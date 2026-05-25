@@ -16,8 +16,8 @@ interface Props {
 
 const {
   title,
-  description = 'Infrastructure engineer. Philosopher in the margins.',
-  ogImage = '/og-default.png',
+  description = 'Software engineer, gravel cyclist, recreational philosopher',
+  ogImage,
 } = Astro.props
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site)
@@ -37,11 +37,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:url"         content={canonicalURL} />
     <meta property="og:title"       content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image"       content={new URL(ogImage, Astro.site)} />
-    <meta name="twitter:card"       content="summary_large_image" />
+    {ogImage && <meta property="og:image" content={new URL(ogImage, Astro.site)} />}
+    {ogImage && <meta name="twitter:card" content="summary_large_image" />}
 
     <link rel="alternate" type="application/rss+xml" title="Conner Gorman · writing" href="/rss.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous" />
 
     <!-- Dark mode: run before paint to avoid flash -->
     <script is:inline>
@@ -81,7 +82,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       <div class="rule-label"><span>end of page</span></div>
       <div style="display:flex; justify-content:space-between; align-items:baseline; margin-top:1rem;">
         <span style="font-family:var(--font-mono); font-size:var(--text-chip); color:var(--color-ink-3);">
-          © {new Date().getFullYear()} yourname
+          © {new Date().getFullYear()} Conner Gorman
         </span>
         <a href="/rss.xml" style="font-family:var(--font-mono); font-size:var(--text-chip); color:var(--color-ink-3); text-decoration:none;"
            onmouseover="this.style.color='var(--color-teal)'" onmouseout="this.style.color='var(--color-ink-3)'">

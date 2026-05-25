@@ -1,0 +1,87 @@
+---
+// src/components/Callout.astro
+interface Props {
+  type?: 'note' | 'tip' | 'warning' | 'info'
+}
+
+const { type = 'note' } = Astro.props
+---
+
+<div class={`callout callout-${type}`}>
+  <slot />
+</div>
+
+<style>
+  .callout {
+    border-left: 3px solid var(--color-rule);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    background: var(--color-paper-dark);
+    border-radius: var(--radius-md);
+    font-family: var(--font-serif);
+    font-size: var(--text-body-sm);
+    line-height: 1.75;
+    color: var(--color-ink-2);
+  }
+
+  .callout :global(p:first-child) {
+    margin-top: 0;
+  }
+
+  .callout :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .callout :global(strong:first-child) {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+    color: var(--color-ink);
+  }
+
+  .callout-note {
+    border-left-color: var(--color-teal);
+  }
+
+  .callout-tip {
+    border-left-color: var(--color-purple);
+  }
+
+  .callout-warning {
+    border-left-color: #b8860b;
+  }
+
+  .callout-info {
+    border-left-color: var(--color-ink-3);
+  }
+
+  /* Dark mode */
+  :global(.dark) .callout {
+    background: var(--color-dark-surface);
+    border-left-color: var(--color-dark-border);
+    color: var(--color-dark-ink-2);
+  }
+
+  :global(.dark) .callout :global(strong:first-child) {
+    color: var(--color-dark-ink);
+  }
+
+  :global(.dark) .callout-note {
+    border-left-color: var(--color-teal-dark);
+  }
+
+  :global(.dark) .callout-tip {
+    border-left-color: var(--color-purple-dark);
+  }
+
+  :global(.dark) .callout-warning {
+    border-left-color: #daa520;
+  }
+
+  :global(.dark) .callout-info {
+    border-left-color: var(--color-dark-ink-3);
+  }
+</style>
