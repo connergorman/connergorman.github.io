@@ -397,7 +397,16 @@
   }
   .dark .site-name { color: var(--color-dark-ink); }
 
-  .nav-prompt { color: var(--color-teal); }
+  .nav-bike {
+    height: 18px;
+    width: auto;
+    display: block;
+    /* SVG strokes are black — invert in dark mode */
+    filter: none;
+  }
+  .dark .nav-bike {
+    filter: invert(1);
+  }
 
   .nav-cursor {
     display: inline-block;

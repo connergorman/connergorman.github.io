@@ -1,0 +1,48 @@
+<svg width="256" xmlns="http://www.w3.org/2000/svg" height="256" viewBox="0 0 256 256" fill="none" version="1.1">
+
+  <!-- Background -->
+  <rect width="256" height="256" style="fill: rgb(53, 54, 54); fill-opacity: 1;"/>
+
+  <!-- Front wheel: center (62, 79) r=30 -->
+  <ellipse cx="62" cy="79" rx="30" ry="30" fill="none" stroke="rgb(255,253,253)" stroke-width="6"/>
+
+  <!-- Rear wheel: center (62, 185) r=30 -->
+  <ellipse cx="62" cy="185" rx="30" ry="30" fill="none" stroke="rgb(255,253,253)" stroke-width="6"/>
+
+  <!-- Frame triangle: rear axle(62,185) → BB(65,141) → seat tube top(20,147) → rear axle -->
+  <path d="M62,185 L65,141 L20,147 Z"
+        fill="none" stroke="rgb(255,253,253)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- Seat tube: BB up to seat cluster (already part of triangle, just the upper extension) -->
+  <line x1="20" y1="147" x2="14" y2="95"
+        stroke="rgb(255,253,253)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Down tube: head tube (14,95) → BB (65,141) -->
+  <line x1="14" y1="95" x2="65" y2="141"
+        stroke="rgb(255,253,253)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Fork: head tube (14,95) → front axle (62,79) -->
+  <line x1="14" y1="95" x2="62" y2="79"
+        stroke="rgb(255,253,253)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- Drop bars: stem goes left from head tube at (14,95), bar goes across then drops at ends -->
+  <!-- Stem: (14,95) → (6,99) -->
+  <!-- Bar top: (6,99) → (16,95) horizontal -->
+  <!-- Left drop: curves down from (6,99) -->
+  <!-- Right drop: curves down from (16,95) -->
+  <path d="M14,95 L6,99 L16,95 M6,99 Q5,105 7,109 M16,95 Q17,101 15,105"
+        fill="none" stroke="rgb(255,253,253)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Seat tube runs from BB(65,141) through junction(20,147) up to head(14,95) -->
+  <!-- Seat cluster is where seat tube meets top tube — midpoint along (20,147)→(14,95) -->
+  <!-- At ~1/3 up: x=18, y=130 -->
+  <line x1="18" y1="130" x2="16" y2="119"
+        stroke="rgb(255,253,253)" stroke-width="6" stroke-linecap="round"/>
+  <!-- Saddle: angled slightly, matching bike tilt -->
+  <line x1="8" y1="117" x2="24" y2="120"
+        stroke="rgb(255,253,253)" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- White rectangle (unchanged from Penpot) -->
+  <rect x="131" y="190" width="96" height="20" style="fill: rgb(252, 252, 255); fill-opacity: 1;"/>
+
+</svg>

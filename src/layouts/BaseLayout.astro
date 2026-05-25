@@ -60,9 +60,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <header class="site-header">
       <nav class="site-nav">
         <a href="/" class="site-name">
-          <span class="nav-prompt">›</span>
+          <img src="/bike.svg" alt="" aria-hidden="true" class="nav-bike" />
           connergorman.com
-          <span class="nav-cursor" aria-hidden="true"></span>
         </a>
         <div class="nav-links" id="nav-links" role="list">
           <a href="/"         role="listitem" class="nav-link" aria-current={Astro.url.pathname === '/'                  ? 'page' : undefined}>home</a>
