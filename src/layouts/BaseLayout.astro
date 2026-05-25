@@ -64,15 +64,40 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
           connergorman.com
           <span class="nav-cursor" aria-hidden="true"></span>
         </a>
-        <div class="nav-links" role="list">
+        <div class="nav-links" id="nav-links" role="list">
           <a href="/"         role="listitem" class="nav-link" aria-current={Astro.url.pathname === '/'                  ? 'page' : undefined}>home</a>
           <a href="/writing"  role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/writing')   ? 'page' : undefined}>writing</a>
           <a href="/projects" role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/projects')  ? 'page' : undefined}>projects</a>
           <a href="/about"    role="listitem" class="nav-link" aria-current={Astro.url.pathname.startsWith('/about')     ? 'page' : undefined}>about</a>
           <ThemeToggle />
         </div>
+        <!-- Hamburger: mobile only -->
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="toggle navigation" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </nav>
+      <!-- Mobile dropdown -->
+      <div class="nav-mobile" id="nav-mobile" aria-hidden="true">
+        <a href="/"         class="nav-mobile-link" aria-current={Astro.url.pathname === '/'                  ? 'page' : undefined}>home</a>
+        <a href="/writing"  class="nav-mobile-link" aria-current={Astro.url.pathname.startsWith('/writing')   ? 'page' : undefined}>writing</a>
+        <a href="/projects" class="nav-mobile-link" aria-current={Astro.url.pathname.startsWith('/projects')  ? 'page' : undefined}>projects</a>
+        <a href="/about"    class="nav-mobile-link" aria-current={Astro.url.pathname.startsWith('/about')     ? 'page' : undefined}>about</a>
+        <div class="nav-mobile-theme"><ThemeToggle /></div>
+      </div>
     </header>
+
+    <script>
+      const hamburger = document.getElementById('nav-hamburger')
+      const mobileNav = document.getElementById('nav-mobile')
+
+      hamburger?.addEventListener('click', () => {
+        const isOpen = hamburger.getAttribute('aria-expanded') === 'true'
+        hamburger.setAttribute('aria-expanded', String(!isOpen))
+        mobileNav?.classList.toggle('nav-mobile--open', !isOpen)
+      })
+    </script>
 
     <main id="main" tabindex="-1">
       <slot />
