@@ -7,6 +7,10 @@ import rehypeKatex from 'rehype-katex'
 
 export default defineConfig({
   site: 'https://connergorman.com',
+  output: 'static',
+  build: {
+    assets: '_astro'
+  },
   integrations: [
     mdx({
       remarkPlugins: [remarkMath],
